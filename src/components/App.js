@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import Header from './common/Header';
-import { CoursesPage } from './course/CoursesPage';
+import CoursesPage from './course/CoursesPage';
 
 class App extends Component {
   render() {
@@ -12,8 +12,6 @@ class App extends Component {
     );
   }
 }
-
-
 
 App.propTypes = {
   children: PropTypes.object.isRequired
