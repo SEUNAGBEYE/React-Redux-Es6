@@ -48,8 +48,8 @@ const CourseForm = ({course, allAuthor, onSave, onChange, loading, errors}) => {
         onClick={onSave}
       />
     </form>
-  )
-}
+  );
+};
 
 CourseForm.propTypes = {
   course: PropTypes.object.isRequired,
