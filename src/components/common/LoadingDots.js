@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 
-export class LoadingDots extends Component {
+class LoadingDots extends Component {
   constructor(props, context){
     super(props, context);
 
