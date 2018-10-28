@@ -1,8 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import CourseList from './CourseList';
-import * as courseActions from '../../actions/courseActions';
 import {browserHistory} from 'react-router';
 
 
@@ -13,7 +10,9 @@ class CoursesPage extends Component {
     this.redirectToAddCoursePage = this.redirectToAddCoursePage.bind(this);
   }
 
-
+  componentDidMount(){
+    this.props.loadCourses();
+  }
   redirectToAddCoursePage() {
     browserHistory.push('/course');
   }
@@ -36,20 +35,8 @@ class CoursesPage extends Component {
 }
 
 CoursesPage.propTypes = {
-  courses: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
+  courses: PropTypes.object.isRequired,
+  loadCourses: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state, ownProps){
-  return {
-    courses: state.courses
-  };
-}
-
-function mapDispatchToProps(dispatch){
-  return {
-    actions: bindActionCreators(courseActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
+export default CoursesPage;

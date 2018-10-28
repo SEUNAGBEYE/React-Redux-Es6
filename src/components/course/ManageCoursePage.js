@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
-import * as courseActions from '../../actions/courseActions';
+import {saveCourse, loadCourses} from '../../actions/courseActions';
+import {loadAuthors} from '../../actions/authorActions';
 import CourseForm from './CourseForm';
 
 class ManageCoursePage extends Component {
@@ -17,6 +18,11 @@ class ManageCoursePage extends Component {
 
     this.updateCourseState = this.updateCourseState.bind(this);
     this.saveCourse = this.saveCourse.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.authorActions.loadAuthors();
+    this.props.params.id && this.props.courseActions.loadCourses();
   }
   
   componentWillReceiveProps(nextProps) {
@@ -34,7 +40,7 @@ class ManageCoursePage extends Component {
   saveCourse(event) {
     event.preventDefault();
     this.setState({saving: true});
-    this.props.actions.saveCourse(this.state.course)
+    this.props.courseActions.saveCourse(this.state.course)
       .then(() => this.redirect())
       .catch(error => {
         this.setState({saving: false});
@@ -64,7 +70,9 @@ class ManageCoursePage extends Component {
 
 ManageCoursePage.propTypes = {
   course: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired,
+  authorActions: PropTypes.object.isRequired,
+  courseActions: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
   authors: PropTypes.array.isRequired
 };
 
@@ -105,7 +113,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators(courseActions, dispatch)
+    courseActions: bindActionCreators({saveCourse, loadCourses}, dispatch),
+    authorActions: bindActionCreators({loadAuthors}, dispatch)
   };
 };
 
